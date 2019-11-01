@@ -28,12 +28,11 @@ def proof_of_work(last_proof):
     proof = 0
     #  TODO: Your code here
 
-    
+    encoded_last_proof = str(last_proof).encode()
+    last_proof_hash = hashlib.sha256(encoded_last_proof).hexdigest()
 
-    last_proof_string = json.dumps(last_proof, sort_keys=True).encode()
-    proof = 0
-
-    while valid_proof(last_proof_string, proof) is False:
+    while valid_proof(last_proof_hash, proof) is False:
+        # print(proof)
         proof += 1
     return proof
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
@@ -47,10 +46,12 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    guess = f"{last_hash}{proof}".encode()
-    guess_hash = hashlib.sha256(guess).hexdigest()
+    # guess = f"{last_hash}{proof}".encode()
+    # guess_hash = hashlib.sha256(guess).hexdigest()
+    new_proof = str(proof).encode()
+    newer_proof = hashlib.sha256(new_proof).hexdigest()
 
-    return guess_hash[:6] == last_hash[-6:]
+    return newer_proof[:6] == last_hash[-6:]
 
 
 if __name__ == '__main__':
