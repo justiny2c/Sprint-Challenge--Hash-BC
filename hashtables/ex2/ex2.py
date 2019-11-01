@@ -19,5 +19,16 @@ def reconstruct_trip(tickets, length):
     """
     YOUR CODE HERE
     """
+    for ticket in tickets:
+        # print(ticket.source, ticket.destination)
+        hash_table_insert(hashtable, ticket.source, ticket.destination)
+    
+    location = hash_table_retrieve(hashtable, "NONE") #PDX
+
+    for i in range(length):
+        route[i] = location #[PDX]
+        # new location looks for key "PDX", returns the destination of "PDX"
+        location = hash_table_retrieve(hashtable, location) 
+    
 
     return route
